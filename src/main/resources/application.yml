@@ -1,19 +1,26 @@
 server:
-  port: 8083  # Еще один уникальный порт
+  port: 8083
 
 spring:
   application:
     name: notification-service
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
   flyway:
     enabled: true
     locations: classpath:db/
     baseline-on-migrate: true
     validate-on-migrate: true
+  # БД настройки - ДЛЯ DOCKER
   datasource:
     url: jdbc:postgresql://notification-postgres:5432/notification_db
     username: notification_user
     password: notification_password
     driver-class-name: org.postgresql.Driver
+
+  # Kafka настройки - ДЛЯ DOCKER
   jpa:
     hibernate:
       ddl-auto: none
@@ -31,16 +38,32 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
+
+# Actuator настройки
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus
+        include: health,info,metrics,prometheus,env,mappings,configprops
       base-path: /actuator
   endpoint:
     health:
       enabled: true
     prometheus:
       enabled: true
+    env:
+      enabled: true
+    mappings:
+      enabled: true
+    configprops:
+      enabled: true
     metrics:
       enabled: true
+
+# Настройки Swagger UI
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+  api-docs:
+    path: /api-docs
