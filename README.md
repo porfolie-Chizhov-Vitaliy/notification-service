@@ -8,7 +8,7 @@
 - Сохраняет данные в Postgres
 - Принимает и отправляет события в Kafka
 - Предоставляет метрики для мониторинга (Prometheus)
-- Swagger UI для REST API запросов ()
+- Swagger UI для REST API запросов (http://localhost:8083/swagger-ui/index.html)
 
 ## Основные команды:
 ### Bash:
